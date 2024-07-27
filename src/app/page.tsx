@@ -1,3 +1,4 @@
+"use client"
 import Footer from "@components/Footer";
 import Header from "@components/Header";
 import Task from "@components/Task";
@@ -10,26 +11,31 @@ export default function Home() {
   // Define the interface of task-item object
   interface TaskItem {
     // your code here
+    id: string;
+    title: string;
+    completed: boolean;
+    
+    
   }
 
   // useState hook for an array of task-item objects
   const [tasks, setTasks] = useState<TaskItem[]>([]);
 
   // Define the function with proper type
-  const addTask = (newTaskTitle) => {
+  const addTask = (newTaskTitle:string) => {
     const newTask = { id: nanoid(), title: newTaskTitle, completed: false };
     const newTasks = [...tasks, newTask];
     setTasks(newTasks);
   };
 
   // Define the function with proper type
-  const deleteTask = (taskId) => {
+  const deleteTask = (taskId:string) => {
     const newTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(newTasks);
   };
 
   // Define the function with proper type
-  const toggleDoneTask = (taskId) => {
+  const toggleDoneTask = (taskId:string) => {
     //structuredClone will copy an array or an object "deeply"
     //So objects within an object will be copied too
     const newTasks = structuredClone(tasks);
@@ -38,6 +44,11 @@ export default function Home() {
     task.completed = !task.completed;
     setTasks(newTasks);
   };
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter((task) => task.completed).length;
+
+
+  
 
   return (
     // Main container
@@ -48,7 +59,7 @@ export default function Home() {
       <div style={{ maxWidth: "400px" }} className="mx-auto">
         {/* Task summary */}
         <p className="text-center text-secondary fst-italic">
-          All (...) Done (...)
+          All ({totalTasks}) Done ({completedTasks})
         </p>
         {/* task input */}
         <TaskInput addTaskFunc={addTask} />
@@ -67,7 +78,7 @@ export default function Home() {
       </div>
 
       {/* //footer section */}
-      <Footer year="2024" fullName="Chayanin Suatap" studentId="12345678" />
+      <Footer year="2024" fullName="Punnatat Ngirnngam" studentId="660610775" />
     </div>
   );
 }
